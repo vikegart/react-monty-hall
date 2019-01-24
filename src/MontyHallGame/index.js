@@ -171,13 +171,13 @@ class MontyHallGame extends Component {
 
     switch (code) {
       case controls.first:
-        console.log(code);
+        this.select_door(0);
         break;
       case controls.second:
-        console.log(code);
+        this.select_door(1);
         break;
       case controls.third:
-        console.log(code);
+        this.select_door(2);
         break;
       default:
     };
