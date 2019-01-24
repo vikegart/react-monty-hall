@@ -36,14 +36,14 @@ class MontyHallGame extends Component {
 
   remove_from_array = (array, element) => {
     const index = array.indexOf(element);
-    
+
     if (index !== -1) { array.splice(index, 1); }
   }
 
   get_door_roles = (selected_door) => {
-    let opened_door = [0,1,2],
-        switch_door = [0,1,2];
-    
+    let opened_door = [0, 1, 2],
+      switch_door = [0, 1, 2];
+
     const winning_door = this.state.winning_door;
 
     this.remove_from_array(opened_door, selected_door);
@@ -63,7 +63,7 @@ class MontyHallGame extends Component {
   select_door = (i) => {
     if (this.state.turn === 0) {
       const opened_door = this.get_door_roles(i).opened,
-            switch_door = this.get_door_roles(i).switch;
+        switch_door = this.get_door_roles(i).switch;
 
       this.setState({
         turn: 1,
@@ -76,10 +76,10 @@ class MontyHallGame extends Component {
 
   stay_or_switch = (action) => {
     if (this.state.turn === 1) {
-      let   results    = this.state.results;
+      let results = this.state.results;
       const did_switch = (action === "switch") ? true : false,
-            final_door = (did_switch) ? this.state.switch_door : this.state.selected_door,
-            did_win    = (this.state.winning_door === final_door);
+        final_door = (did_switch) ? this.state.switch_door : this.state.selected_door,
+        did_win = (this.state.winning_door === final_door);
 
       if (did_switch) {
         (did_win) ? results.switched.wins++ : results.switched.losses++
@@ -105,7 +105,7 @@ class MontyHallGame extends Component {
         switch_door: null,
         winning_door: arrayWithNext.next(),
         action: null,
-      }, () => {console.log(`Победная дверь = ${this.state.winning_door + 1}`)});
+      }, () => { console.log(`Победная дверь = ${this.state.winning_door + 1}`) });
     }
   }
 
@@ -146,11 +146,11 @@ class MontyHallGame extends Component {
   intro_text = () => {
     let text;
     const { turn, selected_door, winning_door } = this.state,
-          ending_text = (selected_door === winning_door) ? "Поздровляю, ты ВЫИГРАЛ" : "Извини, но ты проиграл, а значит парниша, сидящий рядом - выиграл)";
+      ending_text = (selected_door === winning_door) ? "Поздровляю, ты ВЫИГРАЛ" : "Извини, но ты проиграл, а значит парниша, сидящий рядом - выиграл)";
 
 
     if (turn === 0) {
-      text = [ 
+      text = [
         `Выбери дверь, за которой, возможно будет лежать приз ^^. Игр сыграно = ${this.state.played_games}`,
       ];
     } else if (turn === 1) {
@@ -166,9 +166,30 @@ class MontyHallGame extends Component {
     return text.map((p, i) => <p key={i}>{p}</p>);
   }
 
+  handleKeyDown(e, controls) {
+    const { code } = e;
+
+    switch (code) {
+      case controls.first:
+        this.select_door(0);
+        break;
+      case controls.second:
+        this.select_door(1);
+        break;
+      case controls.third:
+        this.select_door(2);
+        break;
+      default:
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', (e) => this.handleKeyDown(e, this.props.controls));
+  }
+
   render() {
     return (
-      <div onKeyPress ={this.handle_key}>
+      <div>
         <div className={s.text}>
           {this.intro_text()}
         </div>

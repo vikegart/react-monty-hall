@@ -5,7 +5,24 @@ import Header from './../Header';
 import MontyHallGame from './../MontyHallGame';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      controls1: {
+        first: 'Digit1',
+        second: 'Digit2',
+        third: 'Digit3',
+      },
+      controls2: {
+        first: 'Numpad1',
+        second: 'Numpad2',
+        third: 'Numpad3',
+      },
+    };
+  }
+
   render() {
+    const { controls1, controls2 } = this.state;
     return (
       <div className={s.wrapper}>
         <Header
@@ -13,7 +30,8 @@ class App extends Component {
         />
         
         <div className={s.intro}>
-          <MontyHallGame />
+          <MontyHallGame controls={controls1}/>
+          <MontyHallGame controls={controls2}/>
         </div>
 
       </div>
