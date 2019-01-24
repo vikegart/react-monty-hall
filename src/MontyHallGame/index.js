@@ -4,17 +4,21 @@ import s from './MontyHallGame.css';
 import DoorGroup from './DoorGroup';
 import WinLoseList from './WinLoseList';
 import Button from '../Button';
+import winnerDoorsArray from './winnerDoors';
+import arrayWithNext from './winnerDoors';
 
 class MontyHallGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      winnerDoorsArray,
       explanation: "",
+      played_games: 0,
       turn: 0,
       selected_door: null,
       opened_door: null,
       switch_door: null,
-      winning_door: Math.floor(Math.random() * 3),
+      winning_door: 2,
       action: null,
       results: {
         stayed: {
@@ -27,6 +31,7 @@ class MontyHallGame extends Component {
         }
       }
     }
+    console.log('Победная дверь = 3');
   }
 
   remove_from_array = (array, element) => {
@@ -93,13 +98,14 @@ class MontyHallGame extends Component {
   restart_game = () => {
     if (this.state.turn === 2) {
       this.setState({
+        played_games: this.state.played_games + 1,
         turn: 0,
         selected_door: null,
         opened_door: null,
         switch_door: null,
-        winning_door: Math.floor(Math.random() * 3),
+        winning_door: arrayWithNext.next(),
         action: null,
-      });
+      }, () => {console.log(`Победная дверь = ${this.state.winning_door + 1}`)});
     }
   }
 
@@ -108,12 +114,12 @@ class MontyHallGame extends Component {
       return (
         <div className={s.buttons}>
           <Button
-            text="Stay"
+            text="Оставить дверь"
             click_event={() => this.stay_or_switch("stay")}
           />
           <Button
             secondary
-            text="Switch"
+            text="Выбрать другую"
             click_event={() => this.stay_or_switch("switch")}
           />
         </div>
@@ -122,7 +128,7 @@ class MontyHallGame extends Component {
       return (
         <div className={s.buttons}>
           <Button
-            text="Play Again"
+            text="Проиграть еще разок"
             click_event={this.restart_game}
           />
         </div>
@@ -132,32 +138,28 @@ class MontyHallGame extends Component {
     return <div></div>;
   }
 
+  handle_key = (event) => {
+    console.log('asd');
+    console.log(event.key);
+  }
+
   intro_text = () => {
     let text;
     const { turn, selected_door, winning_door } = this.state,
-          ending_text = (selected_door === winning_door) ? "Congrats, you've won!" : "Sorry, you've lost!";
+          ending_text = (selected_door === winning_door) ? "Поздровляю, ты ВЫИГРАЛ" : "Извини, но ты проиграл, а значит парниша, сидящий рядом - выиграл)";
 
 
     if (turn === 0) {
-      text = [
-        "Welcome to the Monty Hall Dilemma!",
-        "This is a simple logic puzzle. Below this text are three curtains. Behind one curtain is treasure, but behind the other two are goats. The goal, for most people anyway, is to get the treasure!",
-        "However, you can't just pick one curtain and see what's behind it right away. Where's the fun in that?",
-        "First, select one of the three curtains above."
+      text = [ 
+        `Выбери дверь, за которой, возможно будет лежать приз ^^. Игр сыграно = ${this.state.played_games}`,
       ];
     } else if (turn === 1) {
       text = [
-        "You've selected one curtain, but you can't see what's behind it yet.",
-        "Instead, you can see behind one of the curtains you didn't select. There's a goat behind it! Now there's only two curtains left, one with the treasure and the other with a goat.",
-        "You have a choice: you can either stay with the curtain you first selected, or switch to the other curtain. Whichever one you choose, you'll get whatever is behind it. Most importantly, one choice is twice as likely to get you the treasure.",
-        "What will you do?"
+        `Выбор сделан, теперь ведущий открывает пустую дверь. Поменяшь ли ты свой выбор?`
       ];
     } else if (turn === 2) {
       text = [
         ending_text,
-        "The trick to this puzzle is to always switch your door, since it double your chances!",
-        "Staying means you need to select the right door at the start, giving you a 33% chance. But switching means you have to select a wrong door at the start, giving you a 66% chance. That's why switching is always the better option!",
-        "You can play more rounds and track your win and lose streaks below the curtains to see the statistics behind this in action."
       ];
     }
 
@@ -166,7 +168,7 @@ class MontyHallGame extends Component {
 
   render() {
     return (
-      <div>
+      <div onKeyPress ={this.handle_key}>
         <div className={s.text}>
           {this.intro_text()}
         </div>

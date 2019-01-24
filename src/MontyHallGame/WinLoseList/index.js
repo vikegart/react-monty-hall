@@ -6,16 +6,16 @@ const WinLoseList = ({ label, data }) => {
   return (
     <div className={s.list}>
       <p>
-        Results when you {label}
+        Результаты, когда ты: {label === 'Switched' ? 'изменил выбор' : 'оставил выбор прежним' }
       </p>
 
       <ul>
         <li>
-          {data.wins} {data.wins === 1 ? 'Win' : 'Wins'}
+          {data.wins} {data.wins === 1 ? 'Победа' : 'Побед'}
         </li>
 
         <li>
-          {data.losses} {data.losses === 1 ? 'Loss' : 'Losses'}
+          {data.losses} {data.losses === 1 ? 'Проигрыш' : 'Пороигрышей'}
         </li>
       </ul>
     </div>
