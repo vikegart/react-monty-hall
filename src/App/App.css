@@ -6,3 +6,7 @@
 .intro {
   composes: flex-item padding-base from "../styles/layout.css";
 }
+
+.container_vertical {
+  display: flex;
+}

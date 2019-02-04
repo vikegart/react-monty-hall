@@ -18,7 +18,26 @@ class App extends Component {
         second: 'Numpad2',
         third: 'Numpad3',
       },
+      isHorizontalMode: false,
     };
+  }
+
+  handleKeyDown(e) {
+    const { code } = e;
+
+    switch (code) {
+      case 'Digit9':
+        this.setState({isHorizontalMode: true});
+        break;
+      case 'Digit0':
+      this.setState({isHorizontalMode: true});
+        break;
+      default:
+    };
+  }
+
+  componentDidMount() {
+    document.addEventListener('keydown', (e) => this.handleKeyDown(e));
   }
 
   render() {
@@ -28,13 +47,16 @@ class App extends Component {
         <Header
           title="Битва за 🍕, спасибо Мотни Холлу"
         />
-        
-        <div className={s.intro}>
-          <MontyHallGame controls={controls1}/>
-          <MontyHallGame controls={controls2}/>
+        <div className={s.container_vertical}>
+          <div className={s.intro}>
+            <MontyHallGame controls={controls1} />
+          </div>
+          <div className={s.intro}>
+            <MontyHallGame controls={controls2} />
+          </div>
         </div>
-
       </div>
+
     );
   }
 }
