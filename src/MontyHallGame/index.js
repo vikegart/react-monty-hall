@@ -135,7 +135,7 @@ class MontyHallGame extends Component {
       );
     }
 
-    return <div></div>;
+    return <div style={{height: 53 + 24 + 'px'}}></div>;
   }
 
   handle_key = (event) => {
