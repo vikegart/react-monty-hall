@@ -18,7 +18,7 @@ class App extends Component {
         second: 'Numpad2',
         third: 'Numpad3',
       },
-      isHorizontalMode: false,
+      isHorizontalMode: true,
     };
   }
 
@@ -27,10 +27,10 @@ class App extends Component {
 
     switch (code) {
       case 'Digit9':
-        this.setState({isHorizontalMode: true});
+        this.setState({ isHorizontalMode: true });
         break;
       case 'Digit0':
-      this.setState({isHorizontalMode: true});
+        this.setState({ isHorizontalMode: false });
         break;
       default:
     };
@@ -47,7 +47,7 @@ class App extends Component {
         <Header
           title="Битва за 🍕, спасибо Мотни Холлу"
         />
-        <div className={s.container_vertical}>
+        <div className={this.state.isHorizontalMode ? s.container_horizontal : null}>
           <div className={s.intro}>
             <MontyHallGame controls={controls1} />
           </div>

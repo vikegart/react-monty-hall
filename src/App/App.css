@@ -7,6 +7,6 @@
   composes: flex-item padding-base from "../styles/layout.css";
 }
 
-.container_vertical {
+.container_horizontal {
   display: flex;
 }
