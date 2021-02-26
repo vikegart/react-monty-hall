@@ -15,7 +15,7 @@ const WinLoseList = ({ label, data }) => {
         </li>
 
         <li>
-          {data.losses} {data.losses === 1 ? 'Проигрыш' : 'Пороигрышей'}
+          {data.losses} {data.losses === 1 ? 'Проигрыш' : 'Проигрышей'}
         </li>
       </ul>
     </div>

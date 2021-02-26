@@ -4,15 +4,12 @@ import s from './MontyHallGame.css';
 import DoorGroup from './DoorGroup';
 import WinLoseList from './WinLoseList';
 import Button from '../Button';
-import winnerDoorsArray from './winnerDoors';
 import arrayWithNext from './winnerDoors';
 
 class MontyHallGame extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      winnerDoorsArray,
-      explanation: "",
       played_games: 0,
       turn: 0,
       selected_door: null,
@@ -103,7 +100,8 @@ class MontyHallGame extends Component {
         selected_door: null,
         opened_door: null,
         switch_door: null,
-        winning_door: arrayWithNext.next(),
+        // winning_door: arrayWithNext.next(),
+        winning_door: Math.floor(Math.random() * 3),
         action: null,
       }, () => { console.log(`Победная дверь = ${this.state.winning_door + 1}`) });
     }
