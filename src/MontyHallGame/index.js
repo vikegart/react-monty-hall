@@ -45,7 +45,7 @@ class MontyHallGame extends Component {
 
     this.remove_from_array(opened_door, selected_door);
     this.remove_from_array(opened_door, winning_door);
-    opened_door = opened_door[0];
+    opened_door = opened_door[Math.floor(Math.random() * opened_door.length)];
 
     this.remove_from_array(switch_door, selected_door);
     this.remove_from_array(switch_door, opened_door);
@@ -61,6 +61,10 @@ class MontyHallGame extends Component {
     if (this.state.turn === 0) {
       const opened_door = this.get_door_roles(i).opened,
         switch_door = this.get_door_roles(i).switch;
+        console.log({
+          open: opened_door,
+          switch: switch_door,
+        });
 
       this.setState({
         turn: 1,
