@@ -59,8 +59,9 @@ class MontyHallGame extends Component {
 
   select_door = (i) => {
     if (this.state.turn === 0) {
-      const opened_door = this.get_door_roles(i).opened,
-        switch_door = this.get_door_roles(i).switch;
+      const roles = this.get_door_roles(i);
+      const opened_door = roles.opened;
+      const switch_door = roles.switch;
         console.log({
           open: opened_door,
           switch: switch_door,
